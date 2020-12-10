@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on Mac Phillips</title>
+    <link>/project/</link>
+    <description>Recent content in Projects on Mac Phillips</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 07 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Project 2: Police Killings</title>
+      <link>/project/project2/</link>
+      <pubDate>Sat, 07 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/project2/</guid>
+      <description>Introduction: Selecting DataThe dataset that I will be exploring is called “police_killings” and was accessed through the fivethirtyeight database.
+library(fivethirtyeight)## Warning: package &amp;#39;fivethirtyeight&amp;#39; was built under R version 3.6.3## Some larger datasets need to be installed separately, like senators and## house_district_forecast. To install these, we recommend you install the## fivethirtyeightdata package by running:## install.packages(&amp;#39;fivethirtyeightdata&amp;#39;, repos =## &amp;#39;https://fivethirtyeightdata.github.io/drat/&amp;#39;, type = &amp;#39;source&amp;#39;)police_killings&amp;lt;-police_killingspolice_killings&amp;lt;-na.</description>
+    </item>
+    
+    <item>
+      <title>Project 1: Candidate Stories</title>
+      <link>/project/project1/</link>
+      <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/project1/</guid>
+      <description>Introduction: Selecting DataI searched the fivethirtyeight R package and found two datasets about mentions of 2020 democratic presidential candidates in cable and online news. The datasets contain information categorized by candidate and by day, and include statistics on how many stories each candidate was featured in as well as the percentage of stories that each was present in on any given day. These datasets caught my attention as I have been curious about the influence of media and news coverage on politics, specifically elections, for the past few years.</description>
+    </item>
+    
+  </channel>
+</rss>

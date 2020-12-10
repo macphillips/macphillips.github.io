@@ -1,0 +1,250 @@
+---
+title: "Project 2: Police Killings"
+author: "Mac Phillips"
+date: "2020-11-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr, warn.conflicts = FALSE)
+options(dplyr.summarise.inform=FALSE)
+library(tidyverse)
+library(ggplot2)
+class_diag<-function(probs,truth){
+  tab<-table(factor(probs>.5,levels=c("FALSE","TRUE")),truth)
+  acc=sum(diag(tab))/sum(tab)
+  sens=tab[2,2]/colSums(tab)[2]
+  spec=tab[1,1]/colSums(tab)[1]
+  ppv=tab[2,2]/rowSums(tab)[2]
+  f1=2*(sens*ppv)/(sens+ppv)
+
+  if(is.numeric(truth)==FALSE & is.logical(truth)==FALSE){
+    truth<-as.numeric(truth)-1}
+  
+  #CALCULATE EXACT AUC
+  ord<-order(probs, decreasing=TRUE)
+  probs <- probs[ord]; truth <- truth[ord]
+  
+  TPR=cumsum(truth)/max(1,sum(truth)) 
+  FPR=cumsum(!truth)/max(1,sum(!truth))
+  
+  dup<-c(probs[-1]>=probs[-length(probs)], FALSE)
+  TPR<-c(0,TPR[!dup],1); FPR<-c(0,FPR[!dup],1)
+  
+  n <- length(TPR)
+  auc<- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+
+  data.frame(acc,sens,spec,ppv,f1,auc)
+}
+```
+
+## Introduction: Selecting Data
+
+The dataset that I will be exploring is called "police_killings" and was accessed through the fivethirtyeight database. 
+
+```{R}
+library(fivethirtyeight)
+police_killings<-police_killings
+police_killings<-na.omit(police_killings)
+glimpse(police_killings)
+```
+
+The dataset is a collection of data on individuals killed by police officers in the United States in 2015. After removing all na's in the dataset, we are left with a list of 410 individuals, with data on their name, age in years, gender (binary), and race/ethnicity, as well as data on the census tract where the killing took place. This data includes population, poverty rates, unemployment rates, as well as the proportions of the populaton in the area that are white, black, and hispanic. I will be using this data to look for statistical bias when it comes to what kind of people are killed by police officers. 
+
+## MANOVA
+
+First, in order to explore the potential relationships existing within the dataset, I decided to conduct a MANOVA test, followed by ANOVA's if significance was found, and finally post-hoc t-tests in order to pinpoint exactly where the significance lies in the dataset.
+
+```{R, warning=FALSE}
+man1<-manova(cbind(age,share_white,share_black,share_hispanic,pov,urate)~raceethnicity, data=police_killings)
+summary(man1)
+summary.aov(man1)
+pairwise.t.test(police_killings$age, police_killings$raceethnicity, p.adj = "none")
+pairwise.t.test(police_killings$share_white, police_killings$raceethnicity, p.adj = "none")
+pairwise.t.test(police_killings$share_black, police_killings$raceethnicity, p.adj = "none")
+pairwise.t.test(police_killings$share_hispanic, police_killings$raceethnicity, p.adj = "none")
+pairwise.t.test(police_killings$pov, police_killings$raceethnicity, p.adj = "none")
+pairwise.t.test(police_killings$urate, police_killings$raceethnicity, p.adj = "none")
+```
+
+The MANOVA test found a high degree of significance (p<2.2e-16), and all ANOVA tests also found a high degree of significance (highest p=7.421e-07). A number of p-values were found significant as a result of the post-hoc t-tests, but a total of 67 tests were conducted resulting in a high probability of a Type I error (96.78277% chance). The bonferroni-corrected cutoff was found to be 0.00074626, and with this cutoff there was significance between black and hispanic/latino vs white victims and their age, Asian/Pacific Islander, Black, and Hispanic/Latino vs White victims with a high share of white population, Asian/Pacific Islander, Hispanic/Latino, and White vs Black victims with a high share of black populatuon, Asian/Pacific ISlander, Black, and White vs Hispanic/Latino victims with a high share of Hispanic/Latino population, Black, Hispanic/Latino, and Native American vs White victims when high poverty was reported, and finally significance in White vs Black victims in areas with high rates of unemployment.
+
+The sample sizes for the Asian/Pacific Islander and Native American groups were incredibly small (only 10 and 4 individuals, respectively), so it is highly unlikely that one or both of the groups are normally distributed across all variables. This violates the assumptions of the MANOVA test, so these results cannot be taken at face value. Some of the significant results may not be as significant as the MANOVA may suggest, or they may not be significant at all. Small sample sizes can thwart the accuracy of a multivariate test quickly.
+
+## ANOVA/F statistic Randomization Test
+
+I then decided to examine the relationship between the age of victims and the share of black population in the area where they passed, as there was significance found in the differences of age between black and white victims. 
+
+```{R, warning=FALSE}
+obs_F<-16.329
+Fs<-replicate(5000,{
+    new<-police_killings%>%mutate(share_black=sample(share_black))
+    SSW<- new%>%group_by(age)%>%summarize(SSW=sum((share_black-mean(share_black))^2))%>%
+        summarize(sum(SSW))%>%pull
+    SSB<- new%>%mutate(mean=mean(share_black))%>%group_by(age)%>%mutate(groupmean=mean(share_black))%>%
+        summarize(SSB=sum((mean-groupmean)^2))%>%summarize(sum(SSB))%>%pull
+    (SSB/2)/(SSW/57)
+})
+```
+
+```{R}
+mean(Fs>obs_F)
+hist(Fs, prob=T)
+```
+
+The p-value was found to be 0, or at least very close to it, so we can reject the null hypothesis that there is no correlation between a deceased individual's age and the proportion of black individuals in the immediate area where their death occurred. This suggests that where there is a high populaton of black individuals, the individuals killed by police are more likely to be older than where there is not a high population of black individuals.
+
+## Linear Regression Models
+
+I then decided to look more into potential relationships between age and other statistics. I decided to run a linear regression model between the interaction of the age of the victim and the poverty rate of where they were killed on the victimes race/ethnicity. First, I centered the ages and poverty rates, naming them 'age_c' and 'pov_c', and ran a linear regression with interaction on the variable 'raceethnicity'.
+
+```{R}
+police_killings$age_c<-police_killings$age-(mean(police_killings$age))
+police_killings$pov_c<-police_killings$pov-(mean(police_killings$pov))
+racefit<-lm(age_c*pov_c~raceethnicity, data=police_killings)
+summary(racefit)
+```
+
+The Adjusted R-squared shows that 0.1393% of the variance in the model is explained by this linear regression model.
+The interaction showed no significance, but the coefficients show that there are differences in slopes (y= victim Age, x=poverty rate) for each racial/ethnic group. Asian/Pacific Islander was the intercept at -33.22. The slope for Black individuals was 13.17 higher, the Hispanic/Latino slope was 18.96 higher, and the White slope was 13.16 higher (higher meaning "more positive" in this case). The slope for Native Americans was the most steeply negative, being 167.86 steeper than that for Asians/Pacific Islanders. This means that all of the slopes for each race/ethnicity were negative, so in all cases the individuals killed by police are generally older when the poverty rates are low and younger when the poverty rates are high.
+These slopes were plotted on the graph below.
+
+```{R}
+ggplot(police_killings, aes(x=age_c,y=pov_c,group=raceethnicity))+geom_point(aes(color=raceethnicity))+geom_smooth(method="lm",se=F,fullrange=T,aes(color=raceethnicity))+theme(legend.position=c(.9,.45))+xlab("Poverty Centered")+ylab("Age Centered")
+```
+
+```{R}
+library(sandwich)
+library(lmtest)
+resids<-racefit$residuals; fitvals<-racefit$fitted.values
+ggplot()+geom_point(aes(fitvals,resids))+geom_hline(yintercept=0, col="red")
+bptest(racefit)
+shapiro.test(resids)
+```
+
+In order to check the assumptions of linearity and normality for the fit, I graphed the residuals against the fitted values for the model. The graph looks a little funky because there are only 5 categorial groups on the right side of the model, but linearity still looks ok. The graph did appear to fan out a bit on the right side, which sometimes indicates heteroskedasticity, however, a BP test confirmed that there was indeed homoskedasticity (p=0.1803). The data did not look normally distributed though, which was confirmed by a Shapiro-Wilk test (p=2.498e-14).
+
+Regardless, I decided to compute results using robust standard errors with a coeftest.
+
+```{R}
+coeftest(racefit, vcov = vcovHC(racefit))[,1:2]
+```
+
+The robust standard errors did not change the coefficients very much at all, maybe by a thousandth of a decimal in most cases. However, the standard error values were noticeably lower than in the original model, except for among Native Americans where the standard error rose from 101.41 to 122.586. The change in standard errors not changin the coefficients by much is interesting, suggesting that the original model was fairly strong in its accuracy already.
+
+I then computed more standard errors by bootstrapping from residuals. I used a seed (1234) for consistancy's sake.
+
+```{R}
+#Bootstrapped Std Err from Residuals
+set.seed(1234)
+fit<-lm(age_c*pov_c~raceethnicity,data=police_killings) #fit model
+resids<-fit$residuals #save residuals
+fitted<-fit$fitted.values #save yhats
+resid_resamp<-replicate(5000,{
+   new_resids<-sample(resids,replace=TRUE) #resample resids w/ replacement
+   police_killings$new_y<-fitted+new_resids #add new resids to yhats to get new "data"
+   fit<-lm(new_y~raceethnicity,data=police_killings) #refit model
+   coef(fit) #save coefficient estimates (b0, b1, etc)
+})
+resid_resamp%>%t%>%as.data.frame%>%summarize_all(sd)
+```
+
+The bootstrapped standard errors were much closer to those originally found by the first linear fit model than the robust standard errors. In fact, all of the bootstrapped standard errors were within one unit of the original standard errors from the linear fit model. Similarly, the p-values from the bootstrapped sample were nearly identical to those found from the original linear fit model, showing no significant differences between the slopes measured. Because the SE's are larger overall in the linear fit model and bootstrapped model and there are marginal differences between the two, I would be comfortable using either group in drawing conclusions concerning this particular linear relationship.
+
+## Logistic Regression Models
+
+After running the linear regression model, I decided to run some logistic regressions against the one dichotomous variable in the dataset: the binary gender of the deceased individuals. I ran the first logistic regression against age and race/ethnicity. I started by making a new variable called 'y' that corresponds with the gender variable, 1=male and 0=female.
+
+```{R}
+library(lmtest)
+police_killings<-police_killings%>%mutate(y=ifelse(gender=="Male",1,0))
+logfit<-glm(y~age+raceethnicity,data=police_killings,family="binomial")
+coeftest(logfit)
+probs<-predict(logfit,type="response")
+table(predict=as.numeric(probs>.5),truth=police_killings$y)%>%addmargins
+table(predict=as.numeric(probs>.9),truth=police_killings$y)%>%addmargins
+```
+
+The coefficients from the logistic regression shows that when a victim is Asian/Pacific Islander, their log-odds of being male are 1.6694, or and odds of about 5.30898. As age increases, log odds increases by 1.3131e-02, making odds of being male increase by 1.0132 per year of age. If an individual is black, log-odds rise by 7.2232e-01 (odds=2.0592), if they are Hispanic/Latino log-odds rise by 2.0280 (odds=7.5989), if they are Native American log-odds rise by 14.533 (odds=2.04928e6), and if they are white, log-odds rise by 7.0112e-01 (odds=2.016). This means that if an individual is Native American, they were most certainly male. Behind that group, Hispanic/Latino victims are most likely to be male, followed by black victims, whites, and finally Asians/Pacific Islanders. Overall though, males are certainly more prevalent in the dataset compared to females. 
+I computed a confusion matrix and decided to use .9 as a cutoff, as lower values showed 100% accuracy, which was not very interesting. From that confusion matrix, I found that Accuracy=0.93415, Sensitivity=0.95037, Specificity=0.0, Precision=0.98205, and AUC=0.6. Most of these values are great, except for Specificity, which means that at this cutoff our model cannot accurately predict when a deceased individual is female based soleley on age and race/ethnicity. Additionally, the AUC is not great, but it is also not necessarily bad.
+
+
+Next, I decided to plot the ROC and compute AUC for the probabilities vs the dichotomous gender variable.
+
+```{R}
+library(plotROC)
+ROCplot<-ggplot(police_killings)+geom_roc(aes(d=y,m=probs), n.cuts=0)
+ROCplot
+calc_auc(ROCplot)
+```
+
+Again, the AUC does not look awesome (5.96667) but it could certainly be worse!
+
+#### Random Sub-Sampling and LASSO
+
+Next, I decided to run a random sub-sample cross-validation on the dataset, using the mutated 'y' variable against (almost) all of the numeric variables in the dataset. (The 'class_diag' function was included in the r setup chunk.)
+
+```{R}
+bigfit<-glm(y~age+pop+share_white+share_black+share_hispanic+p_income+h_income+county_income+comp_income+pov+urate+college, data=police_killings, family="binomial")
+prob<-predict(bigfit,type="response")
+pred<-ifelse(prob>.5,1,0)
+table(prediction=pred, truth=police_killings$y) %>% addmargins
+```
+
+The internal classification diagnostics show that the model has 95.366% Accuracy in predicting gender correctly(Acc=0.953658), 100% Sensitivity in correctly predicting females (TPR=1.00), 93.35% Specificity in correctly predicting males (TNR=0.953545), and 5% Precision as only 1/20 of the femaels in the dataset were predicted correctly. 
+
+```{R}
+acc<-data.frame()
+for(i in 1:nrow(police_killings)){
+    ## Create training and test sets
+    train<-police_killings[-i,] #all but observation/row i
+    test<-police_killings[i,] #just observation/row i
+    truth<-test$y
+    ## Fit model on training set (all rows but row i)
+    fit<-glm(y~age+pop+share_white+share_black+share_hispanic+p_income+h_income+county_income+comp_income+pov+urate+college,data=train,family="binomial")
+    ## Test model on remaning datapoint (row i)
+    prob<-predict(fit,newdata = test, type="response")
+    ## Save predicted probability and truth label for point i
+    acc<-rbind(acc,c(prob,truth))
+    names(acc)<-c("prob","truth")
+}
+class_diag(acc$prob,acc$truth)
+```
+
+The AUC of 0.5714 is not great for the soundness of the predictors for gender in this dataset. It is likely low in part to the low specificity of the model (0.05), which means that the model can only correctly predict when a victim is female from all of the numeric variables 5% of the time. The rest of the statistics are so high (Accuracy=94.878% were predicted correctly, Sensitivity=99.487% of males were predicted correctly, Precision=95.33% of predicted males were actually males) likely because there are only 7 females in the datset, so the model correctly predicted that each individual would be male essentially by chance. This is not great if we want to be able to predict whether a victim is male or female, as the model could in theory spit out a male prediction for every individual and appear to be accurate when it is actually failing to accomplish its purpose. Compared to the internal classification diagnostics, all of the coefficients are similar except for precision and specificity, which seem to be flipped. 
+
+In order to explore the model further, I performed a LASSO regression on all of the numeric variables used in the above Cross-Validation in order to see which variables may be the most effective predictors.
+
+```{R}
+library(glmnet)
+y<-as.matrix(police_killings$y)
+x<-police_killings%>%select(age,pop,share_white,share_black,share_hispanic,p_income,h_income,county_income,comp_income,pov,urate,college)%>%mutate_all(scale)%>%as.matrix
+cv<-cv.glmnet(x,y)
+lasso1<-glmnet(x,y,lambda=cv$lambda.1se)
+coef(lasso1)
+acc<-data.frame()
+for(i in 1:nrow(police_killings)){
+    ## Create training and test sets
+    train<-police_killings[-i,] #all but observation/row i
+    test<-police_killings[i,] #just observation/row i
+    truth<-test$y
+    ## Fit model on training set (all rows but row i)
+    fit<-glm(y~age,data=train,family="binomial")
+    ## Test model on remaning datapoint (row i)
+    prob<-predict(fit,newdata = test, type="response")
+    ## Save predicted probability and truth label for point i
+    acc<-rbind(acc,c(prob,truth))
+    names(acc)<-c("prob","truth")
+}
+class_diag(acc$prob,acc$truth)
+```
+
+The only predictor identified by the LASSO regression was victim age. I ran the same CV on the dataset, this time only predicting gender from age, and found an even worse AUC than before. Additionally, this Specificity was 0 meaning that the model predicted that an individual would be female exactly zero times. This means that there is likely no reliable way to predict a victim's gender from the numeric variables given in this dataset. 
+
+## Final Thoughts and Conclusions
+
+A major issue that I had with this data was that only deceased individuals were represented. There was no representation of those who are confronted by police and survive, are arrested, or are let free. Here, there are only the tragically departed, and for this reason I debated examining this dataset in the first place. Clearly, the subject of this project is incredibly delicate, and it certainly unsavory to speak of deceased individuals as merely datapoints and figures. I aimed to treat the departed with the upmost respect, therefore I did not choose to examine this dataset in an effort to make any sort of political statement or to suggest any sort of difinitive relationship between all individuals killed by the police all of the time. 
+
+I hope that in the future, more studies can be done on similar data so that we may learn more about ourselves as a society, as Americans, and as human beings. In the meantime, I hope we all continue to struggle against human nature, thrash against the status quo, and strive to heal the wounds that mar the face of our nation.
+
