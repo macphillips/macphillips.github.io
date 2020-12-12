@@ -11,8 +11,7 @@ output: html_document
 
 <div id="introduction-selecting-data" class="section level2">
 <h2>Introduction: Selecting Data</h2>
-<p>I searched the fivethirtyeight R package and found two datasets about mentions of 2020 democratic presidential candidates in cable and online news. The datasets contain information categorized by candidate and by day, and include statistics on how many stories each candidate was featured in as well as the percentage of stories that each was present in on any given day. These datasets caught my attention as I have been curious about the influence of media and news coverage on politics, specifically elections, for the past few years. I expect that the more popular candidates in this election, namely Joe Biden, Bernie Sanders, and Elizabeth Warren, will consistantly have the most coverage across cable and the internet. I also anticipate that candidates with more coverage in cable news will have similarly high coverage online.
-I joined the two datasets by name and date so that I had one large table with all cable and online data in one place. I also ommitted any NA’s and named this new dataset “all_media_mentions”.</p>
+<p>I searched the fivethirtyeight R package and found two datasets about mentions of 2020 democratic presidential candidates in cable and online news. The datasets contain information categorized by candidate and by day, and include statistics on how many stories each candidate was featured in as well as the percentage of stories that each was present in on any given day. These datasets caught my attention as I have been curious about the influence of media and news coverage on politics, specifically elections, for the past few years. I expect that the more popular candidates in this election, namely Joe Biden, Bernie Sanders, and Elizabeth Warren, will consistantly have the most coverage across cable and the internet. I also anticipate that candidates with more coverage in cable news will have similarly high coverage online. I joined the two datasets by name and date so that I had one large table with all cable and online data in one place. I also ommitted any NA's and named this new dataset &quot;all_media_mentions&quot;.</p>
 <pre class="r"><code>library(fivethirtyeight)</code></pre>
 <pre><code>## Some larger datasets need to be installed separately, like senators and
 ## house_district_forecast. To install these, we recommend you install the
@@ -20,12 +19,12 @@ I joined the two datasets by name and date so that I had one large table with al
 ## install.packages(&#39;fivethirtyeightdata&#39;, repos =
 ## &#39;https://fivethirtyeightdata.github.io/drat/&#39;, type = &#39;source&#39;)</code></pre>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ------ tidyverse 1.3.0 --</code></pre>
-<pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
-## v tibble  3.0.4     v dplyr   1.0.2
-## v tidyr   1.1.2     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.4.0</code></pre>
-<pre><code>## -- Conflicts --------- tidyverse_conflicts() --
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.3     ✓ dplyr   1.0.1
+## ✓ tidyr   1.1.1     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>media_mentions_cable&lt;-media_mentions_cable
@@ -34,121 +33,119 @@ all_media_mentions&lt;-media_mentions_cable %&gt;% full_join(media_mentions_onli
 glimpse(all_media_mentions)</code></pre>
 <pre><code>## Rows: 954
 ## Columns: 11
-## $ date                         &lt;date&gt; 2018-12-30, 2019-01-06, 2019-01-13, 2...
-## $ name                         &lt;chr&gt; &quot;Amy Klobuchar&quot;, &quot;Amy Klobuchar&quot;, &quot;Amy...
-## $ matched_clips                &lt;dbl&gt; 12, 7, 45, 10, 16, 64, 384, 231, 52, 5...
-## $ all_candidate_clips          &lt;dbl&gt; 1279, 1031, 615, 991, 1914, 1454, 1917...
-## $ total_clips                  &lt;dbl&gt; 76029, 82964, 82521, 83649, 80994, 791...
-## $ pct_of_all_candidate_clips   &lt;dbl&gt; 0.009382330, 0.006789525, 0.073170732,...
-## $ query.x                      &lt;chr&gt; &quot;(\&quot;Amy Klobuchar\&quot;) (station:MSNBC OR...
-## $ matched_stories              &lt;dbl&gt; 45, 55, 128, 55, 74, 143, 411, 256, 16...
-## $ all_candidate_stories        &lt;dbl&gt; 806, 915, 1052, 1024, 1605, 1427, 1610...
-## $ pct_of_all_candidate_stories &lt;dbl&gt; 0.05583127, 0.06010929, 0.12167300, 0....
-## $ query.y                      &lt;chr&gt; &quot;(\&quot;Amy Klobuchar\&quot;)&quot;, &quot;(\&quot;Amy Klobuch...</code></pre>
+## $ date                         &lt;date&gt; 2018-12-30, 2019-01-06, 2019-01-13, 201…
+## $ name                         &lt;chr&gt; &quot;Amy Klobuchar&quot;, &quot;Amy Klobuchar&quot;, &quot;Amy K…
+## $ matched_clips                &lt;dbl&gt; 12, 7, 45, 10, 16, 64, 384, 231, 52, 57,…
+## $ all_candidate_clips          &lt;dbl&gt; 1279, 1031, 615, 991, 1914, 1454, 1917, …
+## $ total_clips                  &lt;dbl&gt; 76029, 82964, 82521, 83649, 80994, 79183…
+## $ pct_of_all_candidate_clips   &lt;dbl&gt; 0.009382330, 0.006789525, 0.073170732, 0…
+## $ query.x                      &lt;chr&gt; &quot;(\&quot;Amy Klobuchar\&quot;) (station:MSNBC OR s…
+## $ matched_stories              &lt;dbl&gt; 45, 55, 128, 55, 74, 143, 411, 256, 169,…
+## $ all_candidate_stories        &lt;dbl&gt; 806, 915, 1052, 1024, 1605, 1427, 1610, …
+## $ pct_of_all_candidate_stories &lt;dbl&gt; 0.05583127, 0.06010929, 0.12167300, 0.05…
+## $ query.y                      &lt;chr&gt; &quot;(\&quot;Amy Klobuchar\&quot;)&quot;, &quot;(\&quot;Amy Klobuchar…</code></pre>
 </div>
 <div id="tidying" class="section level2">
 <h2>Tidying</h2>
-<p>After the join, the data was already looking tidy. In order to demonstrate my understanding of the ‘pivot’ functions, I decided to make an entirely unreadable dataset called “uglymedia” by pivoting the candidate names wider with the daily number of cable news clips attached. This resulted in a table just as long as the tidy set, but this time with 34 variables. I re-tidied the data by pivoting the uglymedia longer and ommitting any NA’s.</p>
+<p>After the join, the data was already looking tidy. In order to demonstrate my understanding of the 'pivot' functions, I decided to make an entirely unreadable dataset called &quot;uglymedia&quot; by pivoting the candidate names wider with the daily number of cable news clips attached. This resulted in a table just as long as the tidy set, but this time with 34 variables. I re-tidied the data by pivoting the uglymedia longer and ommitting any NA's.</p>
 <pre class="r"><code>uglymedia &lt;- all_media_mentions %&gt;% pivot_wider(names_from = &#39;name&#39;, values_from = &#39;matched_clips&#39;)
 tidymedia&lt;-uglymedia %&gt;% pivot_longer(cols = 10:34, names_to=&#39;name&#39;, values_to=&#39;matched_clips&#39;) %&gt;% na.omit()</code></pre>
 </div>
 <div id="wrangling" class="section level2">
 <h2>Wrangling</h2>
-<p>First, I decided to remove the variable “total_clips” entirely, as there was no analogue for online articles available and therefore it could not be compared against anything in the online dataset. I did this using the ‘select’ function.
-Then, I decided to do some preliminary exploring of the dataset by using summarize_all and grouping by candidate name.</p>
+<p>First, I decided to remove the variable &quot;total_clips&quot; entirely, as there was no analogue for online articles available and therefore it could not be compared against anything in the online dataset. I did this using the 'select' function. Then, I decided to do some preliminary exploring of the dataset by using summarize_all and grouping by candidate name.</p>
 <pre class="r"><code>all_media_mentions %&gt;% summarize_all(mean)</code></pre>
 <pre><code>## # A tibble: 1 x 11
-##   date        name matched_clips all_candidate_c~ total_clips pct_of_all_cand~
+##   date        name matched_clips all_candidate_c… total_clips pct_of_all_cand…
 ##   &lt;date&gt;     &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;
 ## 1 2019-05-10    NA          157.            3085.      91141.           0.0498
-## # ... with 5 more variables: query.x &lt;dbl&gt;, matched_stories &lt;dbl&gt;,
+## # … with 5 more variables: query.x &lt;dbl&gt;, matched_stories &lt;dbl&gt;,
 ## #   all_candidate_stories &lt;dbl&gt;, pct_of_all_candidate_stories &lt;dbl&gt;,
 ## #   query.y &lt;dbl&gt;</code></pre>
 <pre class="r"><code>all_media_mentions %&gt;% summarize_all(sd)</code></pre>
 <pre><code>## # A tibble: 1 x 11
-##    date  name matched_clips all_candidate_c~ total_clips pct_of_all_cand~
+##    date  name matched_clips all_candidate_c… total_clips pct_of_all_cand…
 ##   &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;
 ## 1  78.7    NA          371.            1541.       6157.           0.0998
-## # ... with 5 more variables: query.x &lt;dbl&gt;, matched_stories &lt;dbl&gt;,
+## # … with 5 more variables: query.x &lt;dbl&gt;, matched_stories &lt;dbl&gt;,
 ## #   all_candidate_stories &lt;dbl&gt;, pct_of_all_candidate_stories &lt;dbl&gt;,
 ## #   query.y &lt;dbl&gt;</code></pre>
 <pre class="r"><code>all_media_mentions %&gt;% group_by(name) %&gt;% summarize_all(mean)</code></pre>
 <pre><code>## # A tibble: 25 x 11
-##    name  date       matched_clips all_candidate_c~ total_clips pct_of_all_cand~
+##    name  date       matched_clips all_candidate_c… total_clips pct_of_all_cand…
 ##    &lt;chr&gt; &lt;date&gt;             &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;
-##  1 Amy ~ 2019-05-15          73              3113.      91306.          0.0278 
-##  2 Andr~ 2019-05-15          31              3113.      91306.          0.00834
-##  3 Bern~ 2019-05-15         510.             3113.      91306.          0.170  
-##  4 Beto~ 2019-05-15         207.             3113.      91306.          0.0753 
-##  5 Bill~ 2019-05-08          45.9            3051.      91096.          0.0147 
-##  6 Cory~ 2019-05-15         170.             3113.      91306.          0.0592 
-##  7 Eliz~ 2019-05-15         489.             3113.      91306.          0.171  
-##  8 Eric~ 2019-04-03          41.5            2849.      89745.          0.0173 
-##  9 Jay ~ 2019-04-24          26.2            3016.      90725.          0.00907
-## 10 Joe ~ 2019-05-15        1330.             3113.      91306.          0.374  
-## # ... with 15 more rows, and 5 more variables: query.x &lt;dbl&gt;,
+##  1 Amy … 2019-05-15          73              3113.      91306.          0.0278 
+##  2 Andr… 2019-05-15          31              3113.      91306.          0.00834
+##  3 Bern… 2019-05-15         510.             3113.      91306.          0.170  
+##  4 Beto… 2019-05-15         207.             3113.      91306.          0.0753 
+##  5 Bill… 2019-05-08          45.9            3051.      91096.          0.0147 
+##  6 Cory… 2019-05-15         170.             3113.      91306.          0.0592 
+##  7 Eliz… 2019-05-15         489.             3113.      91306.          0.171  
+##  8 Eric… 2019-04-03          41.5            2849.      89745.          0.0173 
+##  9 Jay … 2019-04-24          26.2            3016.      90725.          0.00907
+## 10 Joe … 2019-05-15        1330.             3113.      91306.          0.374  
+## # … with 15 more rows, and 5 more variables: query.x &lt;dbl&gt;,
 ## #   matched_stories &lt;dbl&gt;, all_candidate_stories &lt;dbl&gt;,
 ## #   pct_of_all_candidate_stories &lt;dbl&gt;, query.y &lt;dbl&gt;</code></pre>
 <pre class="r"><code>all_media_mentions %&gt;% group_by(name) %&gt;% summarize_all(sd)</code></pre>
 <pre><code>## # A tibble: 25 x 11
-##    name   date matched_clips all_candidate_c~ total_clips pct_of_all_cand~
+##    name   date matched_clips all_candidate_c… total_clips pct_of_all_cand…
 ##    &lt;chr&gt; &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;
-##  1 Amy ~  81.8          68.1            1545.       6140.          0.0335 
-##  2 Andr~  81.8          38.4            1545.       6140.          0.00889
-##  3 Bern~  81.8         296.             1545.       6140.          0.0870 
-##  4 Beto~  81.8         200.             1545.       6140.          0.0747 
-##  5 Bill~  77.8          52.7            1560.       6219.          0.0144 
-##  6 Cory~  81.8         137.             1545.       6140.          0.0427 
-##  7 Eliz~  81.8         274.             1545.       6140.          0.0961 
-##  8 Eric~  57.6          30.9            1559.       6753.          0.0119 
-##  9 Jay ~  69.7          32.8            1612.       6481.          0.0116 
-## 10 Joe ~  81.8         993.             1545.       6140.          0.178  
-## # ... with 15 more rows, and 5 more variables: query.x &lt;dbl&gt;,
+##  1 Amy …  81.8          68.1            1545.       6140.          0.0335 
+##  2 Andr…  81.8          38.4            1545.       6140.          0.00889
+##  3 Bern…  81.8         296.             1545.       6140.          0.0870 
+##  4 Beto…  81.8         200.             1545.       6140.          0.0747 
+##  5 Bill…  77.8          52.7            1560.       6219.          0.0144 
+##  6 Cory…  81.8         137.             1545.       6140.          0.0427 
+##  7 Eliz…  81.8         274.             1545.       6140.          0.0961 
+##  8 Eric…  57.6          30.9            1559.       6753.          0.0119 
+##  9 Jay …  69.7          32.8            1612.       6481.          0.0116 
+## 10 Joe …  81.8         993.             1545.       6140.          0.178  
+## # … with 15 more rows, and 5 more variables: query.x &lt;dbl&gt;,
 ## #   matched_stories &lt;dbl&gt;, all_candidate_stories &lt;dbl&gt;,
 ## #   pct_of_all_candidate_stories &lt;dbl&gt;, query.y &lt;dbl&gt;</code></pre>
 <p>On average, any candidate on any given day can expect to be featured in around 5% of cable news stories relating to the primary election, and 10% of the online news stories relating to the election. Additionally, there were about 3000 total cable news stories every day, and about 1700 total online news articles daily. When grouped by candidate name, we see that Joe Biden has the highest average number of matched cable clips and online stories, as well as the highest relative percentage for both. Biden also has the highest standard deviations across all totals and percentages, suggesting that with the highest frequencies of news coverage comes similarly high variability.</p>
 <pre class="r"><code>all_media_mentions %&gt;% summarize_all(max)</code></pre>
 <pre><code>## # A tibble: 1 x 11
-##   date       name  matched_clips all_candidate_c~ total_clips pct_of_all_cand~
+##   date       name  matched_clips all_candidate_c… total_clips pct_of_all_cand…
 ##   &lt;date&gt;     &lt;chr&gt;         &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;
-## 1 2019-09-29 Tuls~          3405             7361       96953            0.743
-## # ... with 5 more variables: query.x &lt;chr&gt;, matched_stories &lt;dbl&gt;,
+## 1 2019-09-29 Tuls…          3405             7361       96953            0.743
+## # … with 5 more variables: query.x &lt;chr&gt;, matched_stories &lt;dbl&gt;,
 ## #   all_candidate_stories &lt;dbl&gt;, pct_of_all_candidate_stories &lt;dbl&gt;,
 ## #   query.y &lt;chr&gt;</code></pre>
 <pre class="r"><code>all_media_mentions %&gt;% summarize_all(min)</code></pre>
 <pre><code>## # A tibble: 1 x 11
-##   date       name  matched_clips all_candidate_c~ total_clips pct_of_all_cand~
+##   date       name  matched_clips all_candidate_c… total_clips pct_of_all_cand…
 ##   &lt;date&gt;     &lt;chr&gt;         &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;
-## 1 2018-12-30 Amy ~             0              615       76029                0
-## # ... with 5 more variables: query.x &lt;chr&gt;, matched_stories &lt;dbl&gt;,
+## 1 2018-12-30 Amy …             0              615       76029                0
+## # … with 5 more variables: query.x &lt;chr&gt;, matched_stories &lt;dbl&gt;,
 ## #   all_candidate_stories &lt;dbl&gt;, pct_of_all_candidate_stories &lt;dbl&gt;,
 ## #   query.y &lt;chr&gt;</code></pre>
 <pre class="r"><code>all_media_mentions %&gt;% summarize_all(n_distinct)</code></pre>
 <pre><code>## # A tibble: 1 x 11
-##    date  name matched_clips all_candidate_c~ total_clips pct_of_all_cand~
+##    date  name matched_clips all_candidate_c… total_clips pct_of_all_cand…
 ##   &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;       &lt;int&gt;            &lt;int&gt;
 ## 1    40    25           312               40          40              752
-## # ... with 5 more variables: query.x &lt;int&gt;, matched_stories &lt;int&gt;,
+## # … with 5 more variables: query.x &lt;int&gt;, matched_stories &lt;int&gt;,
 ## #   all_candidate_stories &lt;int&gt;, pct_of_all_candidate_stories &lt;int&gt;,
 ## #   query.y &lt;int&gt;</code></pre>
-<p>The number of daily cable clips ranged from 615 to 7361, while the number of daily online articles ranged from 806 to 3677. This is interesting, as the minimum number of total online stories is higher than the minimum for cable clips, but the maximum number of cable clips is more than double the maximum number of online articles. This may be in part because cable news stations typically run stories in different timeslots more than once per day, while an online article will usually only be posted once. Interestingly, the distinct numbers of percentage of a candidate’s presence in daily news for both cable and online news were not equal to the total number of rows in the dataset. This means that there are repeating percentages in the dataset for different candidates on different days. Some of all of these repeated values could of course be zeros. Additionally though, the n_distincts of the number of matched clips on any given day and the number of matched online articles are much lower than the total number of rows in the dataset (312 for cable, 393 for online articles). This means that there is certainly a high amount of repetition in both of these columns that correspond with different story totals, resulting in the higher amount of variance in the percentage columns.</p>
+<p>The number of daily cable clips ranged from 615 to 7361, while the number of daily online articles ranged from 806 to 3677. This is interesting, as the minimum number of total online stories is higher than the minimum for cable clips, but the maximum number of cable clips is more than double the maximum number of online articles. This may be in part because cable news stations typically run stories in different timeslots more than once per day, while an online article will usually only be posted once. Interestingly, the distinct numbers of percentage of a candidate's presence in daily news for both cable and online news were not equal to the total number of rows in the dataset. This means that there are repeating percentages in the dataset for different candidates on different days. Some of all of these repeated values could of course be zeros. Additionally though, the n_distincts of the number of matched clips on any given day and the number of matched online articles are much lower than the total number of rows in the dataset (312 for cable, 393 for online articles). This means that there is certainly a high amount of repetition in both of these columns that correspond with different story totals, resulting in the higher amount of variance in the percentage columns.</p>
 <p>I was then curious about whether or not there were any candidates that dominated both cable and online news with more than 50% of the stories on any given day. In order to find out, I grouped the dataset by candidate name and filtered for percent of cable and online stories greater than 0.5. I found 6 instances of a candidate having more than half of the online and cable stories in any day, once accomplished by Elizabith Warren on December 30, 2018 and five times by Joe Biden in March, June, and September of 2019.</p>
 <pre class="r"><code>all_media_mentions &lt;- all_media_mentions %&gt;% select(-total_clips)
 all_media_mentions %&gt;% group_by(name) %&gt;% filter(pct_of_all_candidate_stories&gt;0.5, pct_of_all_candidate_clips&gt;0.5)</code></pre>
 <pre><code>## # A tibble: 6 x 10
 ## # Groups:   name [2]
-##   date       name  matched_clips all_candidate_c~ pct_of_all_cand~ query.x
+##   date       name  matched_clips all_candidate_c… pct_of_all_cand… query.x
 ##   &lt;date&gt;     &lt;chr&gt;         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;  
-## 1 2018-12-30 Eliz~           721             1279            0.564 &quot;(\&quot;El~
-## 2 2019-03-31 Joe ~          2690             4205            0.640 &quot;(\&quot;Jo~
-## 3 2019-06-09 Joe ~          2642             4780            0.553 &quot;(\&quot;Jo~
-## 4 2019-06-16 Joe ~          2488             4485            0.555 &quot;(\&quot;Jo~
-## 5 2019-09-22 Joe ~          3405             4582            0.743 &quot;(\&quot;Jo~
-## 6 2019-09-29 Joe ~          2764             3986            0.693 &quot;(\&quot;Jo~
-## # ... with 4 more variables: matched_stories &lt;dbl&gt;,
-## #   all_candidate_stories &lt;dbl&gt;, pct_of_all_candidate_stories &lt;dbl&gt;,
-## #   query.y &lt;chr&gt;</code></pre>
-<p>I then decided to create a new variable representing the overall percentage of media coverage relative to the democratic primaries on any given day. To do this, I used the ‘mutate’ function to create a variable called “pct_overall” that summed the daily matched clips and stories and divided that by the sum of the daily total clips and stories. I then filtered this new variable by &gt;50% and found that again, only Joe Biden (10x) and Elizabeth Warren (once) dominated 50% of the news coverage of the Democratic primary (although on this particular day there was a relatively low number of total candidate cable clips as well as online news stories). Had someone assessed this amount of coverage of only Biden and his campaign, they may have been able to predict his nomination for president by the Democratic party before it happened. Biden was absolutely media-dominant during the primaries.</p>
+## 1 2018-12-30 Eliz…           721             1279            0.564 &quot;(\&quot;El…
+## 2 2019-03-31 Joe …          2690             4205            0.640 &quot;(\&quot;Jo…
+## 3 2019-06-09 Joe …          2642             4780            0.553 &quot;(\&quot;Jo…
+## 4 2019-06-16 Joe …          2488             4485            0.555 &quot;(\&quot;Jo…
+## 5 2019-09-22 Joe …          3405             4582            0.743 &quot;(\&quot;Jo…
+## 6 2019-09-29 Joe …          2764             3986            0.693 &quot;(\&quot;Jo…
+## # … with 4 more variables: matched_stories &lt;dbl&gt;, all_candidate_stories &lt;dbl&gt;,
+## #   pct_of_all_candidate_stories &lt;dbl&gt;, query.y &lt;chr&gt;</code></pre>
+<p>I then decided to create a new variable representing the overall percentage of media coverage relative to the democratic primaries on any given day. To do this, I used the 'mutate' function to create a variable called &quot;pct_overall&quot; that summed the daily matched clips and stories and divided that by the sum of the daily total clips and stories. I then filtered this new variable by &gt;50% and found that again, only Joe Biden (10x) and Elizabeth Warren (once) dominated 50% of the news coverage of the Democratic primary (although on this particular day there was a relatively low number of total candidate cable clips as well as online news stories). Had someone assessed this amount of coverage of only Biden and his campaign, they may have been able to predict his nomination for president by the Democratic party before it happened. Biden was absolutely media-dominant during the primaries.</p>
 <pre class="r"><code>all_media_mentions &lt;- all_media_mentions %&gt;% mutate(pct_overall = ((matched_clips+matched_stories)/(all_candidate_clips+all_candidate_stories)))
 all_media_mentions %&gt;% group_by(name) %&gt;% filter(pct_overall&gt;0.5) %&gt;% summarize(pct_overall)</code></pre>
 <pre><code>## `summarise()` regrouping output by &#39;name&#39; (override with `.groups` argument)</code></pre>
@@ -167,18 +164,18 @@ all_media_mentions %&gt;% group_by(name) %&gt;% filter(pct_overall&gt;0.5) %&gt;
 ##  9 Joe Biden              0.510
 ## 10 Joe Biden              0.790
 ## 11 Joe Biden              0.729</code></pre>
-<p>I was also curious to see which candidates had the lowest amount of coverage compared to their constituents on the Democratic ticket, so I arranged the overall percentage in ascending order and summarized the output to just the candidate’s name and overall percentage of media coverage for the day. The resulting output was a series of zero values for Joe Sestak which was not particularly informative, so I decided to filter out the nonzero values. The resulting output showed that again Joe Sestak was at the bottom of the rankings, with the legendary Mike Gravel close behind. This is unfortunate, as former Senator Gravel had a particularly memorable campaign commercial that went semi-viral (<a href="https://www.youtube.com/watch?v=0770rsZIaFc" class="uri">https://www.youtube.com/watch?v=0770rsZIaFc</a>).</p>
+<p>I was also curious to see which candidates had the lowest amount of coverage compared to their constituents on the Democratic ticket, so I arranged the overall percentage in ascending order and summarized the output to just the candidate's name and overall percentage of media coverage for the day. The resulting output was a series of zero values for Joe Sestak which was not particularly informative, so I decided to filter out the nonzero values. The resulting output showed that again Joe Sestak was at the bottom of the rankings, with the legendary Mike Gravel close behind. This is unfortunate, as former Senator Gravel had a particularly memorable campaign commercial that went semi-viral (<a href="https://www.youtube.com/watch?v=0770rsZIaFc" class="uri">https://www.youtube.com/watch?v=0770rsZIaFc</a>).</p>
 <pre class="r"><code>glimpse(all_media_mentions %&gt;% arrange(pct_overall) %&gt;% summarize(name, pct_overall))</code></pre>
 <pre><code>## Rows: 954
 ## Columns: 2
-## $ name        &lt;chr&gt; &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;,...
-## $ pct_overall &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...</code></pre>
+## $ name        &lt;chr&gt; &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;, &quot;…
+## $ pct_overall &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
 <pre class="r"><code>#That was fairly uninformative, let&#39;s try this instead:
 glimpse(all_media_mentions %&gt;% filter(pct_overall&gt;0) %&gt;% arrange(pct_overall) %&gt;% summarize(name,pct_overall))</code></pre>
 <pre><code>## Rows: 928
 ## Columns: 2
-## $ name        &lt;chr&gt; &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;, &quot;Mike Gravel&quot;, &quot;Mike Gravel...
-## $ pct_overall &lt;dbl&gt; 0.0002534212, 0.0002835271, 0.0002835271, 0.0002841716,...</code></pre>
+## $ name        &lt;chr&gt; &quot;Joe Sestak&quot;, &quot;Joe Sestak&quot;, &quot;Mike Gravel&quot;, &quot;Mike Gravel&quot;,…
+## $ pct_overall &lt;dbl&gt; 0.0002534212, 0.0002835271, 0.0002835271, 0.0002841716, 0…</code></pre>
 </div>
 <div id="visualizing-data" class="section level2">
 <h2>Visualizing Data</h2>
@@ -191,24 +188,24 @@ tidycorr&lt;-corr_mentions %&gt;% as.data.frame %&gt;% rownames_to_column(&#39;v
 
 tidycorr %&gt;% ggplot(aes(var1,var2,fill=correlation))+geom_tile()+scale_fill_gradient2(low=&#39;white&#39;, mid=&#39;cyan&#39;,high=&#39;purple&#39;)+geom_text(aes(label=round(correlation,2)), color=&#39;black&#39;, size=4) + theme(axis.text.x = element_text(angle = 90, hjust=1)) + xlab(&quot;&quot;) +ylab(&quot;&quot;)+coord_fixed() + ggtitle(&quot;Media Data Correlation Heatmap&quot;)</code></pre>
 <p><img src="public/project/project1_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>The correlation heatmap shows a few relatively predictable correlations. For example, there is a high correlation between the percentage of a candidate’s appearance in either cable or online news and the percentage of their appearance in all news. This seems predictable because if a candidate has a relatively high number of stories reported about them on a certain day, then one could deduce that their percentage of coverage would be similarly high. There is also a low correlation between the total number of cable and online news stories and an individual candidate’s appearance percentage, which is also predictable as some candidates simply get less coverage compared to others regardless of how many total stories are aired or published.</p>
-<p>Interestingly though, there is a relatively high correlation between the percentage of a candidate’s presence in cable news and their presence in online news. This means that if a candidate is widely covered in one medium, they are likely to also be widely covered in the other. This may indicate a high level of similarity between the news reported online and on cable networks, despite the demographic difference in consumers of the two news mediums. This high correlation is also seen in the total number of candidate stories in cable and online, so if there is a large number of candidate stories published online on a given day, it is likeley that a similarly high number of stories will be reported on cable news on the same day.</p>
+<p>The correlation heatmap shows a few relatively predictable correlations. For example, there is a high correlation between the percentage of a candidate's appearance in either cable or online news and the percentage of their appearance in all news. This seems predictable because if a candidate has a relatively high number of stories reported about them on a certain day, then one could deduce that their percentage of coverage would be similarly high. There is also a low correlation between the total number of cable and online news stories and an individual candidate's appearance percentage, which is also predictable as some candidates simply get less coverage compared to others regardless of how many total stories are aired or published.</p>
+<p>Interestingly though, there is a relatively high correlation between the percentage of a candidate's presence in cable news and their presence in online news. This means that if a candidate is widely covered in one medium, they are likely to also be widely covered in the other. This may indicate a high level of similarity between the news reported online and on cable networks, despite the demographic difference in consumers of the two news mediums. This high correlation is also seen in the total number of candidate stories in cable and online, so if there is a large number of candidate stories published online on a given day, it is likeley that a similarly high number of stories will be reported on cable news on the same day.</p>
 </div>
 <div id="correlation-visualized-on-scatterplot" class="section level4">
 <h4>Correlation Visualized on Scatterplot</h4>
-<p>I wanted to visualise the positive correlation between the percentage of a candidate’s appearance in cable news and the percentage of their appearance in online news. In order to do this, I mapped all of the percentage of cable and percentage of online stories data on different axes without grouping them. I also added a linear regression line using geom_smooth, and used stat=“summary” to help normalize the data in the event that a certain percentage is duplicated.</p>
+<p>I wanted to visualise the positive correlation between the percentage of a candidate's appearance in cable news and the percentage of their appearance in online news. In order to do this, I mapped all of the percentage of cable and percentage of online stories data on different axes without grouping them. I also added a linear regression line using geom_smooth, and used stat=&quot;summary&quot; to help normalize the data in the event that a certain percentage is duplicated.</p>
 <pre class="r"><code>all_media_mentions%&gt;% ggplot(aes(x=pct_of_all_candidate_clips, y=pct_of_all_candidate_stories))+geom_point(color=&#39;orange&#39;, stat=&quot;summary&quot;)+xlab(&quot;% of Cable Clip Mentions&quot;)+ ylab(&quot;% of Onine Story Mentions&quot;)+ggtitle(&quot;Correlation Between Cable and Online News Stories&quot;)+geom_smooth(method=&#39;lm&#39;)+scale_x_continuous(limits=c(0,0.80), breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8))+scale_y_continuous(limits=c(0,0.90), breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9))</code></pre>
 <pre><code>## No summary function supplied, defaulting to `mean_se()`</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="public/project/project1_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>The result is a clear positive correlation between the percentages, as observable from the linear regression line. However, the correlation is certainly not perfect. There appear to be more datapoints above the linear regression line, especially near the bottom left of the plot. This suggests that when a candidate’s percentage of mentions in cable news is relatively low, their percentage of mentions in online news may be marginally higher. On the other hand, when a candidate takes over a certain percentage of candidate mentons on cable, their relative percentage of coverage online tends to fall. This puts them below the linear regression line. So while there is an apparent correlation between a candidate’s percent coverage on each news medium, there may also be an observable trade-off between relative coverage on cable and online news.</p>
+<p>The result is a clear positive correlation between the percentages, as observable from the linear regression line. However, the correlation is certainly not perfect. There appear to be more datapoints above the linear regression line, especially near the bottom left of the plot. This suggests that when a candidate's percentage of mentions in cable news is relatively low, their percentage of mentions in online news may be marginally higher. On the other hand, when a candidate takes over a certain percentage of candidate mentons on cable, their relative percentage of coverage online tends to fall. This puts them below the linear regression line. So while there is an apparent correlation between a candidate's percent coverage on each news medium, there may also be an observable trade-off between relative coverage on cable and online news.</p>
 </div>
 <div id="percent-media-coverage-by-media-type" class="section level4">
 <h4>Percent Media Coverage by Media Type</h4>
-<p>In order to further examine the relationship between a candidate’s relative coverage in cable and online news, I decided to plot each candidate’s percentages of appearance in cable and online on top of one another using boxplots.</p>
+<p>In order to further examine the relationship between a candidate's relative coverage in cable and online news, I decided to plot each candidate's percentages of appearance in cable and online on top of one another using boxplots.</p>
 <pre class="r"><code>ggplot(data=all_media_mentions)+geom_boxplot(aes(x=name, y=pct_of_all_candidate_clips, fill=&quot;clips&quot;), lwd=0.75) + geom_boxplot(aes(x=name, y=pct_of_all_candidate_stories, fill=&quot;stories&quot;), width=0.5, color=&#39;dark gray&#39;)+ggtitle(&quot;Media Mentions in Online and Cable News for each Candidate&quot;)+theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))+ labs(x=&#39;Candidate&#39;, y=&#39;Percent Media Coverage&#39;, fill=&quot;Legend&quot;) +scale_fill_manual(name=&quot;Legend&quot;, values=c(&quot;clips&quot;=&quot;red&quot;, &quot;stories&quot;=&quot;light blue&quot;), labels=c(&quot;Cable Clips&quot;, &quot;Online Stories&quot;))</code></pre>
 <p><img src="public/project/project1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<p>The boxplots reveal an interesting trend in news coverage over the Democratic candidates. While Joe Biden is shown to have been completely dominant in cable news coverage, his median percentage of online coverage was almost matched by both Elizabeth Warren and Bernie Sanders. In fact, every candidate had more relative coverage online than in cable news except for Joe Biden, although Biden did have an online outlier higher than every other value in the dataset. This visualization suggests that if a less popular candidate wants to have a greater impact in the media, online news is the place to start rather than cable. A very popular candidate or candidates will likeley be dominant in both forms of news, but a candidate’s best opportunity to make up ground when it comes to news coverage is almost certainly found on the internet.</p>
+<p>The boxplots reveal an interesting trend in news coverage over the Democratic candidates. While Joe Biden is shown to have been completely dominant in cable news coverage, his median percentage of online coverage was almost matched by both Elizabeth Warren and Bernie Sanders. In fact, every candidate had more relative coverage online than in cable news except for Joe Biden, although Biden did have an online outlier higher than every other value in the dataset. This visualization suggests that if a less popular candidate wants to have a greater impact in the media, online news is the place to start rather than cable. A very popular candidate or candidates will likeley be dominant in both forms of news, but a candidate's best opportunity to make up ground when it comes to news coverage is almost certainly found on the internet.</p>
 </div>
 </div>
 <div id="dimensionality-reduction-pca" class="section level2">
@@ -240,7 +237,7 @@ summary(pca, loadings=T)</code></pre>
 round(cumsum(eigval)/sum(eigval), 2)</code></pre>
 <pre><code>## Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 
 ##   0.90   0.95   1.00   1.00   1.00   1.00   1.00</code></pre>
-<p>First, I created a new dataframe called num_media composed of only the numeric variables from the large dataset. I then used the R function “princomp” in order to run the actual PCA on the numeric variables. This is a handy R function that does a lot of heavy mathematical lifting for you. By running the summary function on the PCA, I was able to see that the first PC was responsible for most of the variance in the dataset, as it had an incredibly high standard deviation. The second and third PC’s also had fairly high sd’s associated with them, while the fourth had relatively low sd. In fact, the first PC alone was responsible for 89.55% of the variance in the dataset, the second was responsible for about 6%, nad the third about 4%. This means the first three PC’s were responsible for almost 100% of the variance in the dataset (99.57% to be more exact).</p>
+<p>First, I created a new dataframe called num_media composed of only the numeric variables from the large dataset. I then used the R function &quot;princomp&quot; in order to run the actual PCA on the numeric variables. This is a handy R function that does a lot of heavy mathematical lifting for you. By running the summary function on the PCA, I was able to see that the first PC was responsible for most of the variance in the dataset, as it had an incredibly high standard deviation. The second and third PC's also had fairly high sd's associated with them, while the fourth had relatively low sd. In fact, the first PC alone was responsible for 89.55% of the variance in the dataset, the second was responsible for about 6%, nad the third about 4%. This means the first three PC's were responsible for almost 100% of the variance in the dataset (99.57% to be more exact).</p>
 <pre class="r"><code>pca$loadings[1:7, 1:3] %&gt;% as.data.frame %&gt;% rownames_to_column %&gt;% ggplot() + geom_hline(aes(yintercept=0), lty=2) + geom_vline(aes(xintercept=0), lty=2) + ylab(&quot;PC2&quot;) + xlab(&quot;PC1&quot;) + geom_segment(aes(x=0, y=0, xend=Comp.1, yend=Comp.2), arrow=arrow(), col=&quot;red&quot;) + geom_label(aes(x=Comp.1*1.1, y=Comp.2*1.1, label=rowname))</code></pre>
 <p><img src="public/project/project1_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>In order to get a good visualisation as to which PCA variables had the highest levels of correlation, I created a graph composed of the PCA loading cectors. The smaller the angle between the vectors, the greater the correlation between their corresponding variables. This graph shows that the number of cable news clips and the number of online news articles for any candidate on any given day are highly correlated. Similarly, the total number of cable clips about any candidate and the total number of online stories about any candidate are also highly correlated. This suggests that when one news medium had a high amount of reporting on a given day, it is likely that the other medium had a similarly high amount of reporting on the Democratic primary. Additionally, if a candidate is highly reported online, they are more likely to be highly reported in cable news as well, and vice versa. The percent vectors are also shown to be highly correlated, which is supported by the previous analysis conducted on the dataset.</p>

@@ -1,0 +1,31 @@
+---
+title: Python or R? You don't have to choose!
+author: Mac Phillips
+date: '2020-12-11'
+slug: python-or-r
+categories: []
+tags: [python]
+description: ''
+---
+### Why is this significant?
+
+Python is a widely-used coding language employed for a variety of purposes in computer science. In my Computational Biology class, we used Python and R in very similar ways, and in doing so learned how the two languages may be able to accomplish similar end goals, but they still each have certain strengths over the other. 
+
+These respective strengths and weaknesses across different tasks in both languages may be a cause for concern when it comes to certain projects. Which language should one use when trying to build professional-looking graphs, something that R is really great at, but you are more familiar with the data processing facilities of Python? Thankfully, the languages are able to communicate and interact so that you can utilize both in the same project using R Studio. There is no need to decide on one or the other when you can just decide to use both together!
+
+### Demonstration
+
+To demonstrate how R and Python can "communicate" in R Studio, I first installed the reticulate package as well as Miniconda. I then created a string in R consisting of an assortment of food items in sequence without spaces (of course you could just as easily do this in Python). It is incredibly difficult to look at, and if you were dealing with an even longer and more difficult to digest string of information, such as a portion of a genome, then finding something important would be incredibly difficult. 
+
+```{R}
+foodstuffs<-'STRAWBERRYPUMPKINBUTTERNUTSQUASHRYEBREADPARSNIPCINNAMONWATERMELONAPPLEFUDGEBROWNIECARROTEGGSBACONPOTATOEPANCAKES'
+```
+
+However, using the reticulate package in Python makes finding something in a long string like this very simple. Using the Python code below, I was able to determine that the word "APPLE" was included in the foodstuffs R string. 
+
+```{python}
+import re
+re.findall(r'APPLE', r.foodstuffs)
+```
+
+This was not a particularly applicable example to most real-world problems that regex is used for, but the concept could easily be extended to solve more complicated problems by switching between the R and Python languages. 

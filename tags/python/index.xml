@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Mac Phillips</title>
+    <link>/tags/python/</link>
+    <description>Recent content in python on Mac Phillips</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 11 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python or R? You don&#39;t have to choose!</title>
+      <link>/post/2020/12/11/python-or-r/</link>
+      <pubDate>Fri, 11 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/12/11/python-or-r/</guid>
+      <description>Why is this significant? Python is a widely-used coding language employed for a variety of purposes in computer science. In my Computational Biology class, we used Python and R in very similar ways, and in doing so learned how the two languages may be able to accomplish similar end goals, but they still each have certain strengths over the other.
+These respective strengths and weaknesses across different tasks in both languages may be a cause for concern when it comes to certain projects.</description>
+    </item>
+    
+  </channel>
+</rss>
