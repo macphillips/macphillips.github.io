@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Mac Phillips" />
     
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico">
     <title>Project 2: Police Killings</title>
     <meta name="generator" content="Hugo 0.79.0" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
     
@@ -28,7 +28,7 @@
       <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <a class="navbar-brand" href="../../"><i class="fa fa-home"></i></a>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -39,11 +39,11 @@
       <ul class="nav navbar-nav navbar-right">
       
         
-        <li><a href="/post/">BLOG</a></li>
+        <li><a href="../../post/">BLOG</a></li>
         
-        <li><a href="/projects/">PROJECTS</a></li>
+        <li><a href="../../projects/">PROJECTS</a></li>
         
-        <li><a href="/resume/">RESUME</a></li>
+        <li><a href="../../resume/">RESUME</a></li>
         
       
       </ul>
@@ -54,7 +54,7 @@
       <div class="container">
         <div class="blog-post">
           <h3>
-            <strong><a href="/project/project2/">Project 2: Police Killings</a></strong>
+            <strong><a href="../../project/project2/">Project 2: Police Killings</a></strong>
           </h3>
         </div>
  
@@ -70,8 +70,8 @@
           <div class="panel-body">
             <div class="blogpost">
               
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+<link href="../../rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="../../rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <div id="introduction-selecting-data" class="section level2">
@@ -273,7 +273,7 @@ Fs&lt;-replicate(5000,{
 <pre class="r"><code>mean(Fs&gt;obs_F)</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code>hist(Fs, prob=T)</code></pre>
-<p><img src="/project/project2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>The p-value was found to be 0, or at least very close to it, so we can reject the null hypothesis that there is no correlation between a deceased individual’s age and the proportion of black individuals in the immediate area where their death occurred. This suggests that where there is a high populaton of black individuals, the individuals killed by police are more likely to be older than where there is not a high population of black individuals.</p>
 </div>
 <div id="linear-regression-models" class="section level2">
@@ -309,7 +309,7 @@ The interaction showed no significance, but the coefficients show that there are
 These slopes were plotted on the graph below.</p>
 <pre class="r"><code>ggplot(police_killings, aes(x=age_c,y=pov_c,group=raceethnicity))+geom_point(aes(color=raceethnicity))+geom_smooth(method=&quot;lm&quot;,se=F,fullrange=T,aes(color=raceethnicity))+theme(legend.position=c(.9,.45))+xlab(&quot;Poverty Centered&quot;)+ylab(&quot;Age Centered&quot;)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="/project/project2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>library(sandwich)</code></pre>
 <pre><code>## Warning: package &#39;sandwich&#39; was built under R version 3.6.3</code></pre>
 <pre class="r"><code>library(lmtest)</code></pre>
@@ -323,7 +323,7 @@ These slopes were plotted on the graph below.</p>
 ##     as.Date, as.Date.numeric</code></pre>
 <pre class="r"><code>resids&lt;-racefit$residuals; fitvals&lt;-racefit$fitted.values
 ggplot()+geom_point(aes(fitvals,resids))+geom_hline(yintercept=0, col=&quot;red&quot;)</code></pre>
-<p><img src="/project/project2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>bptest(racefit)</code></pre>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
@@ -401,7 +401,7 @@ I computed a confusion matrix and decided to use .9 as a cutoff, as lower values
 <pre><code>## Warning: package &#39;plotROC&#39; was built under R version 3.6.3</code></pre>
 <pre class="r"><code>ROCplot&lt;-ggplot(police_killings)+geom_roc(aes(d=y,m=probs), n.cuts=0)
 ROCplot</code></pre>
-<p><img src="/project/project2_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <pre class="r"><code>calc_auc(ROCplot)</code></pre>
 <pre><code>##   PANEL group       AUC
 ## 1     1    -1 0.5966667</code></pre>
@@ -539,10 +539,10 @@ class_diag(acc$prob,acc$truth)</code></pre>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="/js/docs.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="../../js/docs.min.js"></script>
+<script src="../../js/main.js"></script>
 
-<script src="/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../js/ie10-viewport-bug-workaround.js"></script>
 
 
     

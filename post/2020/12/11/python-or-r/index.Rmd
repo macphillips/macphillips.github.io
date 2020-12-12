@@ -28,4 +28,6 @@ import re
 re.findall(r'APPLE', r.foodstuffs)
 ```
 
-This was not a particularly applicable example to most real-world problems that regex is used for, but the concept could easily be extended to solve more complicated problems by switching between the R and Python languages. 
+This was not a particularly applicable example to most real-world problems that regex is used for, but the concept could easily be extended to solve more complicated problems by switching between the R and Python languages.
+
+![](~/website/content/post/2020-12-11-python-or-r-you-don-t-have-to-choose/apple.gif)

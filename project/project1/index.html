@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Mac Phillips" />
     
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico">
     <title>Project 1: Candidate Stories</title>
     <meta name="generator" content="Hugo 0.79.0" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
     
@@ -28,7 +28,7 @@
       <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <a class="navbar-brand" href="../../"><i class="fa fa-home"></i></a>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -39,11 +39,11 @@
       <ul class="nav navbar-nav navbar-right">
       
         
-        <li><a href="/post/">BLOG</a></li>
+        <li><a href="../../post/">BLOG</a></li>
         
-        <li><a href="/projects/">PROJECTS</a></li>
+        <li><a href="../../projects/">PROJECTS</a></li>
         
-        <li><a href="/resume/">RESUME</a></li>
+        <li><a href="../../resume/">RESUME</a></li>
         
       
       </ul>
@@ -54,7 +54,7 @@
       <div class="container">
         <div class="blog-post">
           <h3>
-            <strong><a href="/project/project1/">Project 1: Candidate Stories</a></strong>
+            <strong><a href="../../project/project1/">Project 1: Candidate Stories</a></strong>
           </h3>
         </div>
  
@@ -70,8 +70,8 @@
           <div class="panel-body">
             <div class="blogpost">
               
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+<link href="../../rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="../../rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <div id="introduction-selecting-data" class="section level2">
@@ -255,7 +255,7 @@ corr_mentions&lt;-all_media_mentions %&gt;% select_if(is.numeric) %&gt;% cor(use
 tidycorr&lt;-corr_mentions %&gt;% as.data.frame %&gt;% rownames_to_column(&#39;var1&#39;) %&gt;% pivot_longer(-1, names_to=&#39;var2&#39;, values_to=&#39;correlation&#39;)
 
 tidycorr %&gt;% ggplot(aes(var1,var2,fill=correlation))+geom_tile()+scale_fill_gradient2(low=&#39;white&#39;, mid=&#39;cyan&#39;,high=&#39;purple&#39;)+geom_text(aes(label=round(correlation,2)), color=&#39;black&#39;, size=4) + theme(axis.text.x = element_text(angle = 90, hjust=1)) + xlab(&quot;&quot;) +ylab(&quot;&quot;)+coord_fixed() + ggtitle(&quot;Media Data Correlation Heatmap&quot;)</code></pre>
-<p><img src="/project/project1_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>The correlation heatmap shows a few relatively predictable correlations. For example, there is a high correlation between the percentage of a candidate’s appearance in either cable or online news and the percentage of their appearance in all news. This seems predictable because if a candidate has a relatively high number of stories reported about them on a certain day, then one could deduce that their percentage of coverage would be similarly high. There is also a low correlation between the total number of cable and online news stories and an individual candidate’s appearance percentage, which is also predictable as some candidates simply get less coverage compared to others regardless of how many total stories are aired or published.</p>
 <p>Interestingly though, there is a relatively high correlation between the percentage of a candidate’s presence in cable news and their presence in online news. This means that if a candidate is widely covered in one medium, they are likely to also be widely covered in the other. This may indicate a high level of similarity between the news reported online and on cable networks, despite the demographic difference in consumers of the two news mediums. This high correlation is also seen in the total number of candidate stories in cable and online, so if there is a large number of candidate stories published online on a given day, it is likeley that a similarly high number of stories will be reported on cable news on the same day.</p>
 </div>
@@ -265,14 +265,14 @@ tidycorr %&gt;% ggplot(aes(var1,var2,fill=correlation))+geom_tile()+scale_fill_g
 <pre class="r"><code>all_media_mentions%&gt;% ggplot(aes(x=pct_of_all_candidate_clips, y=pct_of_all_candidate_stories))+geom_point(color=&#39;orange&#39;, stat=&quot;summary&quot;)+xlab(&quot;% of Cable Clip Mentions&quot;)+ ylab(&quot;% of Onine Story Mentions&quot;)+ggtitle(&quot;Correlation Between Cable and Online News Stories&quot;)+geom_smooth(method=&#39;lm&#39;)+scale_x_continuous(limits=c(0,0.80), breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8))+scale_y_continuous(limits=c(0,0.90), breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9))</code></pre>
 <pre><code>## No summary function supplied, defaulting to `mean_se()`</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="/project/project1_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>The result is a clear positive correlation between the percentages, as observable from the linear regression line. However, the correlation is certainly not perfect. There appear to be more datapoints above the linear regression line, especially near the bottom left of the plot. This suggests that when a candidate’s percentage of mentions in cable news is relatively low, their percentage of mentions in online news may be marginally higher. On the other hand, when a candidate takes over a certain percentage of candidate mentons on cable, their relative percentage of coverage online tends to fall. This puts them below the linear regression line. So while there is an apparent correlation between a candidate’s percent coverage on each news medium, there may also be an observable trade-off between relative coverage on cable and online news.</p>
 </div>
 <div id="percent-media-coverage-by-media-type" class="section level4">
 <h4>Percent Media Coverage by Media Type</h4>
 <p>In order to further examine the relationship between a candidate’s relative coverage in cable and online news, I decided to plot each candidate’s percentages of appearance in cable and online on top of one another using boxplots.</p>
 <pre class="r"><code>ggplot(data=all_media_mentions)+geom_boxplot(aes(x=name, y=pct_of_all_candidate_clips, fill=&quot;clips&quot;), lwd=0.75) + geom_boxplot(aes(x=name, y=pct_of_all_candidate_stories, fill=&quot;stories&quot;), width=0.5, color=&#39;dark gray&#39;)+ggtitle(&quot;Media Mentions in Online and Cable News for each Candidate&quot;)+theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))+ labs(x=&#39;Candidate&#39;, y=&#39;Percent Media Coverage&#39;, fill=&quot;Legend&quot;) +scale_fill_manual(name=&quot;Legend&quot;, values=c(&quot;clips&quot;=&quot;red&quot;, &quot;stories&quot;=&quot;light blue&quot;), labels=c(&quot;Cable Clips&quot;, &quot;Online Stories&quot;))</code></pre>
-<p><img src="/project/project1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>The boxplots reveal an interesting trend in news coverage over the Democratic candidates. While Joe Biden is shown to have been completely dominant in cable news coverage, his median percentage of online coverage was almost matched by both Elizabeth Warren and Bernie Sanders. In fact, every candidate had more relative coverage online than in cable news except for Joe Biden, although Biden did have an online outlier higher than every other value in the dataset. This visualization suggests that if a less popular candidate wants to have a greater impact in the media, online news is the place to start rather than cable. A very popular candidate or candidates will likeley be dominant in both forms of news, but a candidate’s best opportunity to make up ground when it comes to news coverage is almost certainly found on the internet.</p>
 </div>
 </div>
@@ -307,7 +307,7 @@ round(cumsum(eigval)/sum(eigval), 2)</code></pre>
 ##   0.90   0.95   1.00   1.00   1.00   1.00   1.00</code></pre>
 <p>First, I created a new dataframe called num_media composed of only the numeric variables from the large dataset. I then used the R function “princomp” in order to run the actual PCA on the numeric variables. This is a handy R function that does a lot of heavy mathematical lifting for you. By running the summary function on the PCA, I was able to see that the first PC was responsible for most of the variance in the dataset, as it had an incredibly high standard deviation. The second and third PC’s also had fairly high sd’s associated with them, while the fourth had relatively low sd. In fact, the first PC alone was responsible for 89.55% of the variance in the dataset, the second was responsible for about 6%, nad the third about 4%. This means the first three PC’s were responsible for almost 100% of the variance in the dataset (99.57% to be more exact).</p>
 <pre class="r"><code>pca$loadings[1:7, 1:3] %&gt;% as.data.frame %&gt;% rownames_to_column %&gt;% ggplot() + geom_hline(aes(yintercept=0), lty=2) + geom_vline(aes(xintercept=0), lty=2) + ylab(&quot;PC2&quot;) + xlab(&quot;PC1&quot;) + geom_segment(aes(x=0, y=0, xend=Comp.1, yend=Comp.2), arrow=arrow(), col=&quot;red&quot;) + geom_label(aes(x=Comp.1*1.1, y=Comp.2*1.1, label=rowname))</code></pre>
-<p><img src="/project/project1_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>In order to get a good visualisation as to which PCA variables had the highest levels of correlation, I created a graph composed of the PCA loading cectors. The smaller the angle between the vectors, the greater the correlation between their corresponding variables. This graph shows that the number of cable news clips and the number of online news articles for any candidate on any given day are highly correlated. Similarly, the total number of cable clips about any candidate and the total number of online stories about any candidate are also highly correlated. This suggests that when one news medium had a high amount of reporting on a given day, it is likely that the other medium had a similarly high amount of reporting on the Democratic primary. Additionally, if a candidate is highly reported online, they are more likely to be highly reported in cable news as well, and vice versa. The percent vectors are also shown to be highly correlated, which is supported by the previous analysis conducted on the dataset.</p>
 </div>
 
@@ -357,10 +357,10 @@ round(cumsum(eigval)/sum(eigval), 2)</code></pre>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="/js/docs.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="../../js/docs.min.js"></script>
+<script src="../../js/main.js"></script>
 
-<script src="/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../js/ie10-viewport-bug-workaround.js"></script>
 
 
     
